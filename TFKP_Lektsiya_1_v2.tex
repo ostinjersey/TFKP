@@ -1,0 +1,501 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{cmap}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+
+\geometry{left=20mm,right=20mm,top=22mm,bottom=22mm}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setcounter{tocdepth}{2}
+
+\titleformat{\section}
+  {\Large\bfseries}{\thesection}{0.7em}{}
+\titleformat{\subsection}
+  {\large\bfseries}{\thesubsection}{0.7em}{}
+
+\hypersetup{
+  unicode=true,
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black,
+  pdftitle={ТФКП. Лекция 1}
+}
+
+\newcommand{\CC}{\mathbb C}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\OO}{\mathcal O}
+
+\begin{document}
+
+% ------------------------------------------------------------
+% Титульный лист
+% ------------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+
+\vspace*{1.5cm}
+
+{\LARGE\bfseries Теория функций комплексного переменного}
+
+\vspace{1.2cm}
+
+{\large Механико-математический факультет МГУ}
+
+\vspace{2cm}
+
+{\Large Конспект лекций}
+
+\vspace{1.5cm}
+
+{\large Лектор: Андрей Викторович Домрин}
+
+\vspace{0.7cm}
+
+{\large 5 семестр}
+
+\vfill
+
+{\Large\bfseries Лекция 1}
+
+\vspace{1.5cm}
+
+\end{center}
+\end{titlepage}
+
+% ------------------------------------------------------------
+% Содержание
+% ------------------------------------------------------------
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------
+\section{Лекция 1}
+% ------------------------------------------------------------
+
+\subsection{Комплексные числа}
+
+Напомним основные обозначения. Комплексное число
+\(z=x+iy\in\CC\) отождествляется с точкой \((x,y)\in\RR^2\). При этом
+\[
+\operatorname{Re}z=x,\qquad \operatorname{Im}z=y.
+\]
+
+Модуль комплексного числа равен
+\[
+|z|=\sqrt{x^2+y^2}.
+\]
+Если \(z\neq0\), то
+\[
+z=|z|(\cos\varphi+i\sin\varphi),
+\]
+где \(\varphi=\arg z\). Аргумент определён с точностью до \(2\pi\).
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=0.9]
+  \draw[->] (-0.3,0)--(4.2,0) node[right] {$\operatorname{Re}z$};
+  \draw[->] (0,-0.3)--(0,3.2) node[above] {$\operatorname{Im}z$};
+  \coordinate (O) at (0,0);
+  \coordinate (Z) at (3,2.1);
+  \draw[thick,->] (O)--(Z) node[midway,above left] {$|z|$};
+  \draw (0.9,0) arc[start angle=0,end angle=35,radius=0.9];
+  \node at (1.18,0.34) {$\arg z$};
+  \fill (Z) circle (1.4pt);
+  \node[above right] at (Z) {$z=x+iy$};
+\end{tikzpicture}
+\end{center}
+
+Пусть \(z_1,z_2\in\CC\). Тогда
+\[
+|z_1z_2|=|z_1|\,|z_2|,
+\]
+а аргументы при умножении складываются с точностью до \(2\pi\):
+\[
+\arg(z_1z_2)=\arg z_1+\arg z_2 \pmod{2\pi}.
+\]
+
+\textbf{Пример.} Найти \(A,B\in\RR\), если
+\[
+(1+i)^{2026}=A+iB.
+\]
+
+\textbf{Решение.} Так как
+\[
+1+i=\sqrt2\left(\cos\frac{\pi}{4}+i\sin\frac{\pi}{4}\right),
+\]
+то
+\[
+(1+i)^{2026}
+=2^{1013}\left(\cos\frac{2026\pi}{4}+i\sin\frac{2026\pi}{4}\right).
+\]
+Поскольку
+\[
+\frac{2026\pi}{4}=506\pi+\frac{\pi}{2},
+\]
+получаем
+\[
+(1+i)^{2026}=2^{1013}i.
+\]
+Следовательно,
+\[
+A=0,\qquad B=2^{1013}.
+\]
+
+% ------------------------------------------------------------
+\subsection{Непрерывность функции комплексного переменного}
+
+Пусть \(D\subset\CC\) --- открытое множество и \(f:D\to\CC\).
+
+\textbf{Определение.} Функция \(f\) называется непрерывной в точке
+\(z_0\in D\), если
+\[
+\forall\varepsilon>0\ \exists\delta>0:\quad
+|z-z_0|<\delta\ \Longrightarrow\ |f(z)-f(z_0)|<\varepsilon.
+\]
+
+Эквивалентно: для любой последовательности \(z_n\to z_0\)
+\[
+f(z_n)\to f(z_0).
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=0.82]
+  \draw[->] (-3.7,0)--(-0.8,0);
+  \draw[->] (-2.25,-1.45)--(-2.25,1.65);
+  \draw[thick] (-2.25,0.05) ellipse (1.0 and 0.7);
+  \fill (-2.25,0.05) circle (1.4pt) node[below] {$z_0$};
+  \draw (-2.25,0.05) circle (0.38);
+  \node at (-2.25,1.08) {$D$};
+
+  \draw[->,thick] (-0.45,0.2)--(0.85,0.2) node[midway,above] {$w=f(z)$};
+
+  \draw[->] (1.2,0)--(4.2,0);
+  \draw[->] (2.7,-1.45)--(2.7,1.65);
+  \draw[thick] (2.7,0.05) ellipse (1.0 and 0.7);
+  \fill (2.7,0.05) circle (1.4pt) node[below] {$f(z_0)$};
+  \draw (2.7,0.05) circle (0.38);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Примеры.}
+\begin{enumerate}[label=\arabic*)]
+  \item \(f(z)=z\) непрерывна на \(\CC\).
+  \item \(f(z)=z^2\) непрерывна на \(\CC\).
+  \item \(f(z)=\overline z\) непрерывна на \(\CC\).
+  \item \(f(z)=1/z\) определена и непрерывна на \(\CC\setminus\{0\}\).
+  \item Для функции
+  \[
+  f(z)=\ln|z|+i\arg z
+  \]
+  необходимо выбрать ветвь аргумента.
+\end{enumerate}
+
+Если выбрать аргумент так, что \(-\pi<\arg z\leq\pi\), то на отрицательной
+вещественной полуоси возникает разрыв. Действительно, при подходе к точке
+\(-1\) сверху аргументы стремятся к \(\pi\), а при подходе снизу --- к
+\(-\pi\). Поэтому для однозначного непрерывного выбора аргумента требуется
+разрез плоскости.
+
+% ------------------------------------------------------------
+\subsection{Дифференцируемость и условия Коши--Римана}
+
+Пусть \(D\subset\CC\) --- открытое множество, \(z_0\in D\),
+\(f:D\to\CC\).
+
+\textbf{Определение.} Функция \(f\) называется комплексно дифференцируемой
+в точке \(z_0\), если существует предел
+\[
+f'(z_0)=\lim\limits_{z\to z_0}
+\frac{f(z)-f(z_0)}{z-z_0}\in\CC.
+\]
+
+Эквивалентно, существует \(A\in\CC\) такое, что
+\[
+f(z_0+h)=f(z_0)+Ah+o(|h|),\qquad h\to0.
+\]
+При этом \(A=f'(z_0)\).
+
+Теперь будем рассматривать \(f\) как отображение \(\RR^2\to\RR^2\). Пусть
+\[
+f(z)=u(x,y)+iv(x,y),\qquad z=x+iy.
+\]
+
+\textbf{Определение.} Функция \(f\) называется вещественно дифференцируемой
+в точке \(z_0\), если существует линейное отображение
+\(d_{z_0}f:\RR^2\to\RR^2\), для которого
+\[
+f(z_0+h)-f(z_0)=d_{z_0}f(h)+o(|h|),\qquad h\to0.
+\]
+Если \(f\) вещественно дифференцируема, то
+\[
+d_{z_0}f=
+\begin{pmatrix}
+ u_x(z_0) & u_y(z_0)\\
+ v_x(z_0) & v_y(z_0)
+\end{pmatrix}.
+\]
+
+\textbf{Теорема (условия Коши--Римана).}
+Функция \(f=u+iv\) комплексно дифференцируема в точке \(z_0\) тогда и
+только тогда, когда она вещественно дифференцируема в точке \(z_0\) и
+выполнены условия
+\[
+u_x(z_0)=v_y(z_0),\qquad
+u_y(z_0)=-v_x(z_0).
+\]
+
+\textbf{Доказательство.}
+Пусть \(f\) комплексно дифференцируема в \(z_0\). Тогда
+\[
+f(z_0+h)=f(z_0)+Ah+o(|h|),
+\]
+где \(A=a+ib\), \(h=\xi+i\eta\). Имеем
+\[
+Ah=(a+ib)(\xi+i\eta)
+=(a\xi-b\eta)+i(b\xi+a\eta).
+\]
+Значит, умножению на \(A\) как вещественному линейному отображению
+соответствует матрица
+\[
+\begin{pmatrix}
+ a & -b\\
+ b & a
+\end{pmatrix}.
+\]
+Следовательно,
+\[
+\begin{pmatrix}
+ u_x(z_0) & u_y(z_0)\\
+ v_x(z_0) & v_y(z_0)
+\end{pmatrix}
+=
+\begin{pmatrix}
+ a & -b\\
+ b & a
+\end{pmatrix},
+\]
+откуда и следуют условия Коши--Римана.
+
+Обратно, если \(f\) вещественно дифференцируема и выполнены условия
+Коши--Римана, то матрица \(d_{z_0}f\) имеет вид
+\[
+\begin{pmatrix}
+ a & -b\\
+ b & a
+\end{pmatrix},
+\]
+то есть соответствует умножению на комплексное число \(A=a+ib\). Поэтому
+\[
+f(z_0+h)=f(z_0)+Ah+o(|h|),
+\]
+и функция комплексно дифференцируема в \(z_0\).
+
+\textbf{Следствие.} Если \(f=u+iv\) комплексно дифференцируема в \(z_0\), то
+\[
+f'(z_0)
+=u_x(z_0)+iv_x(z_0)
+=v_y(z_0)-iu_y(z_0).
+\]
+
+% ------------------------------------------------------------
+\subsection{Голоморфные функции}
+
+\textbf{Определение.} Функция \(f:D\to\CC\) называется голоморфной в точке
+\(z_0\in D\), если она комплексно дифференцируема в некоторой окрестности
+этой точки. Запись:
+\[
+f\in\OO(z_0).
+\]
+
+Функция называется голоморфной на открытом множестве \(D\), если она
+комплексно дифференцируема в каждой точке \(D\). Запись:
+\[
+f\in\OO(D).
+\]
+
+Для произвольного множества \(M\subset\CC\) запись \(f\in\OO(M)\) означает,
+что существует открытое множество \(D\supset M\), на котором \(f\) голоморфна.
+
+\textbf{Свойства.}
+\begin{enumerate}[label=\arabic*)]
+  \item Если \(f,g\in\OO(D)\), то \(f\pm g\) и \(fg\) голоморфны на \(D\), причём
+  \[
+  (fg)'=f'g+fg'.
+  \]
+
+  \item Если \(g(z)\neq0\), то частное \(f/g\) голоморфно там, где знаменатель
+  не обращается в нуль.
+
+  \item Если \(f\in\OO(D_1)\), \(g\in\OO(D_2)\) и \(D_2\supset f(D_1)\), то
+  \(g\circ f\in\OO(D_1)\), причём
+  \[
+  (g\circ f)'(z)=g'(f(z))f'(z).
+  \]
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Обратная функция}
+
+\textbf{Теорема.} Пусть \(P_1,P_2\subset\CC\) --- открытые множества,
+\(f\in\OO(P_1)\) гомеоморфно отображает \(P_1\) на \(P_2\), и
+\[
+f'(z)\neq0\qquad \forall z\in P_1.
+\]
+Тогда обратное отображение \(g=f^{-1}:P_2\to P_1\) голоморфно, причём
+\[
+g'(w)=\frac{1}{f'(g(w))},\qquad w\in P_2.
+\]
+
+\textbf{Доказательство.}
+Пусть \(w=f(z)\), \(w_1=f(z_1)\). Тогда
+\[
+\frac{g(w_1)-g(w)}{w_1-w}
+=
+\frac{z_1-z}{f(z_1)-f(z)}.
+\]
+Так как \(g\) непрерывна, из \(w_1\to w\) следует \(z_1\to z\). Поэтому
+\[
+\frac{g(w_1)-g(w)}{w_1-w}
+\longrightarrow
+\frac{1}{f'(z)}
+=
+\frac{1}{f'(g(w))}.
+\]
+
+\textbf{Замечание.} На лекции отмечено, что достаточно требовать, чтобы
+голоморфная функция биективно отображала \(P_1\) на \(P_2\): необходимые
+свойства обратного отображения в этой ситуации следуют автоматически.
+
+% ------------------------------------------------------------
+\subsection{Экспонента и комплексный логарифм}
+
+Рассмотрим комплексную экспоненту
+\[
+w=e^z.
+\]
+Её можно задавать степенным рядом
+\[
+e^z=\sum\limits_{n=0}^{\infty}\frac{z^n}{n!}.
+\]
+Для \(z=x+iy\) используется представление
+\[
+e^{x+iy}=e^x(\cos y+i\sin y).
+\]
+В частности,
+\[
+e^{iy}=\cos y+i\sin y.
+\]
+
+Для любых \(z_1,z_2\in\CC\)
+\[
+e^{z_1+z_2}=e^{z_1}e^{z_2}.
+\]
+
+Покажем, что \(f(z)=e^z\) голоморфна. Пишем
+\[
+u(x,y)=e^x\cos y,\qquad v(x,y)=e^x\sin y.
+\]
+Тогда
+\[
+u_x=e^x\cos y=v_y,
+\qquad
+u_y=-e^x\sin y=-v_x.
+\]
+Условия Коши--Римана выполнены на всей \(\CC\). Поэтому
+\[
+e^z\in\OO(\CC),
+\qquad
+(e^z)'=e^z.
+\]
+
+Вернёмся к нескольким примерам:
+\[
+f_1(z)=z,\qquad f_1'(z)=1,
+\]
+\[
+f_2(z)=z^2,\qquad f_2'(z)=2z.
+\]
+Для \(f_3(z)=\overline z\) имеем \(u=x\), \(v=-y\), поэтому
+\[
+d_zf_3=
+\begin{pmatrix}
+1&0\\
+0&-1
+\end{pmatrix}.
+\]
+Эта матрица не имеет вида
+\(\begin{pmatrix}a&-b\\ b&a\end{pmatrix}\), поэтому функция
+\(\overline z\) нигде не комплексно дифференцируема.
+
+Кроме того,
+\[
+f_4(z)=\frac1z\in\OO(\CC\setminus\{0\}),
+\qquad
+f_4'(z)=-\frac1{z^2}.
+\]
+
+Теперь рассмотрим область
+\[
+D=\CC\setminus(-\infty,0].
+\]
+На ней выбирается ветвь аргумента
+\[
+-\pi<\arg z<\pi.
+\]
+
+\textbf{Определение.} Соответствующая ветвь комплексного логарифма задаётся
+формулой
+\[
+\operatorname{Log}z=\ln|z|+i\arg z.
+\]
+
+Проверим:
+\[
+e^{\operatorname{Log}z}
+=e^{\ln|z|+i\arg z}
+=|z|\bigl(\cos(\arg z)+i\sin(\arg z)\bigr)
+=z.
+\]
+Таким образом, эта ветвь логарифма является обратной к экспоненте после
+ограничения экспоненты на горизонтальную полосу
+\[
+-\pi<\operatorname{Im}w<\pi.
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=0.78]
+  \draw[->] (-4,0)--(-0.6,0) node[right] {$x$};
+  \draw[->] (-2.3,-1.7)--(-2.3,1.7) node[above] {$y$};
+  \draw[line width=1.2pt] (-4,0)--(-2.3,0);
+  \node at (-2.3,-2.05) {$D=\CC\setminus(-\infty,0]$};
+
+  \draw[->,thick] (-0.3,0)--(1.0,0) node[midway,above] {$w=\operatorname{Log}z$};
+
+  \draw[->] (1.4,0)--(5.1,0) node[right] {$u$};
+  \draw[->] (3.1,-1.9)--(3.1,1.9) node[above] {$v$};
+  \draw[dashed] (1.6,1.25)--(4.9,1.25);
+  \draw[dashed] (1.6,-1.25)--(4.9,-1.25);
+  \node[right] at (4.9,1.25) {$\pi$};
+  \node[right] at (4.9,-1.25) {$-\pi$};
+\end{tikzpicture}
+\end{center}
+
+По формуле для производной обратной функции
+\[
+(\operatorname{Log}z)'
+=\frac{1}{e^{\operatorname{Log}z}}
+=\frac1z.
+\]
+
+\end{document}
